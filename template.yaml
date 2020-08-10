@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Sample app
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:   
+      AutoPublishAlias: qa
+      Runtime: python3.6          
+      CodeUri: ./function      
+      Handler: app.lambda_handler
+      Layers:               
+        - !Ref HelloWorldLayer  #arn:aws:lambda:us-east-1:blahblahblah:layer:HelloWorlLayer:2      
+  
+  HelloWorldLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: HelloWorlLayer
+      Description: Layer description
+      ContentUri: ./layer
+      CompatibleRuntimes:
+        - python3.6
+      RetentionPolicy: Retain
